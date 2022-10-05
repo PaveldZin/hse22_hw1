@@ -32,6 +32,7 @@ multiqc -o multiqc_report fastqc_reports
 platanus_trim paired-end-1.fastq paired-end-2.fastq
 platanus_internal_trim mate-pairs-1.fastq mate-pairs-2.fastq
 ``` 
+### Удаление fastq файлов
 ``` 
 rm paired-end-1.fastq paired-end-2.fastq
 rm mate-pairs-1.fastq mate-pairs-2.fastq
@@ -52,7 +53,34 @@ multiqc -o multiqc_trimmed_report fastqc_trimmed_reports
 ``` 
 platanus assemble -o Bacteria -f paired-end-1.fastq.trimmed paired-end-2.fastq.trimmed 2> assemble.log
 ``` 
+``` 
+Общее количество:  623
+Общая длина:  3926270
+Самая большая длина:  130338
+N50:  52802
+``` 
 ## Собирание скаффолдов из контигов и подрезанных чтений
 ``` 
 platanus scaffold -o Bacteria -c Bacteria_contig.fa -IP1 paired-end-1.fastq.trimmed paired-end-2.fastq.trimmed -OP2 mate-pairs-1.fastq.int_trimmed mate-pairs-2.fastq.int_trimmed 2> scaffold.log
 ``` 
+``` 
+Общее количество:  75
+Общая длина:  3876169
+Самая большая длина:  3834738
+N50:  3834738
+Количество гэпов:  65
+Общая длина гэпов:  6285
+``` 
+## Уменьшение числа гэпов с помощью подрезанных чтений 
+``` 
+platanus gap_close -o Bacteria -c Bacteria_scaffold.fa -IP1 paired-end-1.fastq.trimmed paired-end-2.fastq.trimmed -OP2 mate-pairs-1.fastq.int_trimmed mate-pairs-2.fastq.int_trimmed 2> gapclose.log
+``` 
+``` 
+Количество гэпов:  8
+Общая длина гэпов:  1423
+```
+### Удаление fastq файлов
+```
+rm paired-end-1.fastq.trimmed paired-end-2.fastq.trimmed
+rm mate-pairs-1.fastq.int_trimmed mate-pairs-2.fastq.int_trimmed
+```
